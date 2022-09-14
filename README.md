@@ -12,3 +12,4 @@
 
 # To do
 * Clean up requirements
+* Add pytest to the github pipeline
