@@ -1,0 +1,26 @@
+custom:
+  basic-cluster-props: &basic-cluster-props
+    spark_version: "10.4.x-scala2.12"
+
+  basic-static-cluster: &basic-static-cluster
+    new_cluster:
+      <<: *basic-cluster-props
+      num_workers: 1
+      node_type_id: "Standard_DS3_v2"
+
+environments:
+  default:
+    jobs:
+      #######################################################################################
+      # this is an example job with single task based on 2.1 API and wheel_task format      #
+      #######################################################################################
+      - name: "dbx_cli_tutorial_job"
+        job_clusters:
+          - job_cluster_key: "default"
+            <<: *basic-static-cluster
+        tasks:
+          - task_key: "main"
+            job_cluster_key: "default"
+            python_wheel_task:
+              package_name: "sample_project"
+              entry_point: "etl_job" # take a look at the setup.py entry_points section for details on how to define an entrypoint
