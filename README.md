@@ -11,5 +11,26 @@
 
 
 # To do
-* Clean up requirements
 * Add pytest to the github pipeline
+
+
+# Commands
+Execute a task interactivly agains the workspace cluster
+```sh
+dbx execute --cluster-name "Robert Yousif's Cluster" --job "dbx_cli_tutorial_job" --task main
+```
+
+Deploy to workspace as a workflow job
+```sh
+dbx deploy
+```
+
+Launch a workflow job
+```sh
+dbx launch --job "dbx_cli_tutorial_job"
+```
+
+Run the tests
+```sh
+pytest
+```

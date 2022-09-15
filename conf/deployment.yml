@@ -22,5 +22,5 @@ environments:
           - task_key: "main"
             job_cluster_key: "default"
             python_wheel_task:
-              package_name: "sample_project"
+              package_name: "workloads"
               entry_point: "etl_job" # take a look at the setup.py entry_points section for details on how to define an entrypoint

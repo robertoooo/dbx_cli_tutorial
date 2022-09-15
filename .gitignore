@@ -34,3 +34,8 @@ htmlcov/*
 mlruns/
 
 venv/
+venv2/
+
+metastore_db
+spark-warehouse
+derby.log
