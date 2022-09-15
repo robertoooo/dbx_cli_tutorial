@@ -10,7 +10,7 @@ custom:
 
 environments:
   default:
-    jobs:
+    workflows:
       #######################################################################################
       # this is an example job with single task based on 2.1 API and wheel_task format      #
       #######################################################################################
@@ -24,3 +24,10 @@ environments:
             python_wheel_task:
               package_name: "workloads"
               entry_point: "etl_job" # take a look at the setup.py entry_points section for details on how to define an entrypoint
+          - task_key: "notebook_simple"
+            job_cluster_key: "default"
+            notebook_task:
+              notebook_path: "/Repos/dbx_projects/dbx_cli_tutorial/notebooks/simple_notebook_task"
+              source: WORKSPACE
+            depends_on:
+              - task_key: "main"

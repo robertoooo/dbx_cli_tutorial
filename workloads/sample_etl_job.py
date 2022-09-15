@@ -16,7 +16,7 @@ def main():
 
     # Print data for fun
     df_read = spark.sql("SELECT * FROM default.nytaxi_OH")
-    print(df_read.collect())
+    print(df_read.head())
 
 
 def filter_zipcode(df, zipcode):

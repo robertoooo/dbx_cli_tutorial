@@ -16,6 +16,7 @@
 
 # Commands
 Execute a task interactivly agains the workspace cluster
+NOTE: This is only supported by spark_python_task and python_wheel_task
 ```sh
 dbx execute --cluster-name "Robert Yousif's Cluster" --job "dbx_cli_tutorial_job" --task main
 ```
