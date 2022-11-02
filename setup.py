@@ -11,6 +11,7 @@ setup(
     name="workloads",
     packages=find_packages(exclude=["tests", "tests.*"]),
     setup_requires=["wheel"],
+    # install_requires=["arrow==1.0.2"],
     entry_points = {
         "console_scripts": [
             "etl_job = workloads.sample_etl_job:main"
