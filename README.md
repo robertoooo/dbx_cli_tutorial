@@ -1,7 +1,7 @@
 # Steps
 * git clone project
 * python -m venv venv
-* pip install -r requirements.txt
+* pip install -r requirements.dev.txt
 * Open databricks workspace and create a PAT token
 * databricks configure --token
   * add the Databricks hostname ex: https://adb-xxxxxxxxxxxxx.x.azuredatabricks.net/
