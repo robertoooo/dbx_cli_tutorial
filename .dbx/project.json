@@ -1,7 +1,7 @@
 {
     "environments": {
         "default": {
-            "profile": "DEFAULT-DONE",
+            "profile": "DEFAULT-ROB",
             "workspace_dir": "/Shared/dbx/dbxcli_tutorial",
             "artifact_location": "dbfs:/Shared/dbx/projects/dbxcli_tutorial"
         }
