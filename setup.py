@@ -1,17 +1,20 @@
-"""
-This file configures the Python package with entrypoints used for future runs on Databricks.
-
-Please follow the `entry_points` documentation for more details on how to configure the entrypoint:
-* https://setuptools.pypa.io/en/latest/userguide/entry_point.html
-"""
-
 from setuptools import find_packages, setup
+
+PACKAGE_REQUIREMENTS = ["pyyaml"]
+
+LOCAL_REQUIREMENTS = [
+    "pyspark==3.3.0",
+    "delta-spark==2.1.0",
+    "dbx",
+    "pytest"
+]
 
 setup(
     name="workloads",
     packages=find_packages(exclude=["tests", "tests.*"]),
-    setup_requires=["wheel"],
-    # install_requires=["arrow==1.0.2"],
+    setup_requires=["setuptools", "wheel"],
+    install_requires=PACKAGE_REQUIREMENTS,
+    extras_require={"local": LOCAL_REQUIREMENTS},
     entry_points = {
         "console_scripts": [
             "etl_job = workloads.sample_etl_job:main"

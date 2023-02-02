@@ -2,8 +2,14 @@
     "environments": {
         "default": {
             "profile": "DEFAULT-ROB",
-            "workspace_dir": "/Shared/dbx/dbxcli_tutorial",
-            "artifact_location": "dbfs:/Shared/dbx/projects/dbxcli_tutorial"
+            "storage_type": "mlflow",
+            "properties": {
+                "workspace_directory": "/Shared/dbx/dbxcli_tutorial",
+                "artifact_location": "dbfs:/Shared/dbx/projects/dbxcli_tutorial"
+            }
         }
-    }
+    },
+    "inplace_jinja_support": false,
+    "failsafe_cluster_reuse_with_assets": false,
+    "context_based_upload_for_execute": false
 }

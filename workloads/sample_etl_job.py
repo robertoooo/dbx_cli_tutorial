@@ -1,6 +1,7 @@
 from pyspark.shell import spark
 
 def main():
+    """The main function specified as an entry point inside the setup.py file"""
     demo_table_sourcepath = "dbfs:/databricks-datasets/nyctaxi-with-zipcodes/subsampled"
     table_full_name = "default.nytaxi_OH"
 
@@ -16,9 +17,10 @@ def main():
 
 
 class Utils:
-    
+    """Simple Utils Class with helper function """
     @staticmethod
     def read_delta_table_with_storage_path(path):
+        """"""
         df = spark.sql(f"SELECT * FROM delta.`{path}`")
         return df
 
@@ -29,7 +31,6 @@ class Utils:
 
     @staticmethod
     def write_managed_table(df, table_full_name):
-        storage_path = "spark-warehouse/test"
         df.write.mode("overwrite").saveAsTable(table_full_name)
 
     @staticmethod

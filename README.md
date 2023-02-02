@@ -1,4 +1,4 @@
-# Steps
+# Setup the environment
 * git clone project
 * python -m venv venv
 * pip install -r requirements.dev.txt
