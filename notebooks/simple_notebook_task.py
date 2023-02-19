@@ -22,7 +22,7 @@ df_gold = spark.sql(
         SUM(fare_amount) as sum_fare_amount, 
         avg(duration_seconds) as avg_duration_seconds 
     FROM 
-        pax_demo.nyctaxi.nytaxi_silver 
+        nytaxi_silver 
     GROUP BY 
         pickup_zip 
     ORDER BY 
