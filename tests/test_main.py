@@ -15,5 +15,5 @@ from unittest.mock import patch
 def test_task_sample_etl_job(spark: SparkSession):
     from workloads.sample_etl_job import main
     main()
-    assert spark.sql("show tables").where(col("tableName") == "bronze_nytaxi").count() == 1
-    assert spark.sql("show tables").where(col("tableName") == "silver_nytaxi").count() == 1
+    assert spark.sql("show tables").where(col("tableName") == "nytaxi_bronze").count() == 1
+    assert spark.sql("show tables").where(col("tableName") == "nytaxi_silver").count() == 1

@@ -15,7 +15,7 @@ def main():
         path=nycitytaxi_path, frmt=source_table_format, opt=read_options
     )
 
-    utils.write_managed_table(df, "bronze_nytaxi")  # Bronze Table
+    utils.write_managed_table(df, "nytaxi_bronze")  # Bronze Table
 
     # Augment new column and write it to the hive metastore
     df = df.withColumn(
@@ -26,7 +26,7 @@ def main():
         ).astype("int"),
     )
 
-    utils.write_managed_table(df, "silver_nytaxi")  # Silver Table
+    utils.write_managed_table(df, "nytaxi_silver")  # Silver Table
     print("Successfully transformed and saved table")
 
 
