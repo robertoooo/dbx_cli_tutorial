@@ -32,4 +32,4 @@ df_gold = spark.sql(
 
 # COMMAND ----------
 
-df_gold.write.mode("OVERWRITE").saveAsTable("pax_demo.nyctaxi.nytaxi_gold")
+df_gold.write.mode("OVERWRITE").saveAsTable("nytaxi_gold")
