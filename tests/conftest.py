@@ -10,15 +10,18 @@ import tempfile
 from delta import configure_spark_with_delta_pip
 import shutil
 
+
 @dataclass
 class FileInfoFixture:
     """
     This class mocks the DBUtils FileInfo object
     """
+
     path: str
     name: str
     size: int
     modificationTime: int
+
 
 class DBUtilsFixture:
     """
@@ -71,6 +74,16 @@ def spark() -> SparkSession:
     """
     logging.info("Configuring Spark session for testing environment")
     warehouse_dir = tempfile.TemporaryDirectory().name
+
+    if Path(warehouse_dir).exists():
+        shutil.rmtree(warehouse_dir)
+
+    if Path("spark-warehouse").exists():
+        shutil.rmtree("spark-warehouse")
+
+    if Path("metastore_db").exists():
+        shutil.rmtree("metastore_db")
+
     _builder = (
         SparkSession.builder.master("local[*]")
         .config("spark.hive.metastore.warehouse.dir", Path(warehouse_dir).as_uri())
