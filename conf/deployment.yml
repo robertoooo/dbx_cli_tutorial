@@ -1,9 +1,6 @@
 environments:
   default:
     workflows:
-      #######################################################################################
-      # this is an example job with single task based on 2.1 API and wheel_task format      #
-      #######################################################################################
       - name: "dbx_cli_tutorial_workflow"
         job_clusters:
           - job_cluster_key: "default"
