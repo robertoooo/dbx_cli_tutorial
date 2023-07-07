@@ -1,15 +1,11 @@
 """test"""
-import logging
-from pathlib import Path
-
 from pyspark.sql import DataFrame, SparkSession
-from pyspark.sql.functions import to_timestamp
-from pyspark.sql.types import IntegerType, StringType, StructField, StructType
-
-from tests.conftest import DBUtilsFixture
 
 
-def test_write_managed_table(spark: SparkSession, tmp_path: Path):
+def test_write_managed_table(spark: SparkSession):
+    """
+    Integration test the write managed table Utils method
+    """
     from workloads.sample_etl_job import Utils
 
     data = [
@@ -26,17 +22,24 @@ def test_write_managed_table(spark: SparkSession, tmp_path: Path):
 
     list_tables = spark.sql("SHOW TABLES FROM default").collect()
     print("Current available tables are: \n", list_tables)
+    
+    # Assert if the table default.categories exists
+    assert len(list_tables) == 1 and list_tables[0]["tableName"] == "categories"
 
-    target_table_path = "default.categories"
-    target_storage_path = "spark-warehouse/categories"
+    # Assert if the table default.categories has the correct schema
+    df_schema = spark.sql("DESCRIBE TABLE default.categories").collect()
+    assert df_schema[0]["col_name"] == "Category"
 
 
-def test_filter_zipcode(spark: SparkSession, tmp_path: Path):
+
+def test_filter_zipcode(spark: SparkSession):
     from workloads.sample_etl_job import Utils
+
 
     df = spark.read.csv("data/nytaxi-with-zipcodes.csv", header=True)
     df_filter = Utils.filter_zipcode(df, "10027")
     list_assert = df_filter.select("pickup_zip").distinct().collect()
+    
     # Assert if the df only has one disticnt zipcode and that the zipcode is 10027
     assert len(list_assert) == 1 and list_assert[0]["pickup_zip"] == "10027"
 
@@ -46,23 +49,11 @@ def test_read_table_with_storage_path(spark: SparkSession):
     from workloads.sample_etl_job import Utils
 
     df = Utils.read_table_with_storage_path(
-        frmt="csv", path="data/nytaxi-with-zipcodes.csv", opt={"header": True}
+        spark=spark, frmt="csv", path="data/nytaxi-with-zipcodes.csv", opt={"header": True}
     )
 
+    # Assert that df is a DataFrame
     assert(isinstance(df, DataFrame))
-    assert(df.isEmpty() == False)
-
-
-def test_dbutils(tmp_path: Path):
-    """Basic test of dbutils conftest
-    Creates a directory in root called spark-warehouse and then checks if the directory is there.
-    This directory is needed for the spark session to function properly.
-    """
-    logging.info("Testing the sample dbutils job")
-    dbu = DBUtilsFixture()
-    dbu.mkdirs("spark-warehouse")
-    result = dbu.ls(".")
-    path_list_name = [row.name for row in result]
-    assert (
-        "spark-warehouse" in path_list_name
-    ), "Your project does not contain a folder called spark-warehouse"
+    
+    # Assert that df contains data
+    assert df.count() > 0

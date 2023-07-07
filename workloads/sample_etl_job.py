@@ -1,4 +1,4 @@
-from pyspark.shell import spark
+from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql.functions import to_timestamp
 
 nycitytaxi_path = "dbfs:/databricks-datasets/nyctaxi-with-zipcodes/subsampled"
@@ -6,12 +6,12 @@ source_table_format = "DELTA"
 read_options = {}
 
 
-def main():
+def main(spark: SparkSession):
     """The main function specified as an entry point inside the setup.py file"""
     utils = Utils()
 
     # Read table from databricks sample data and stage it in your own hive metastore
-    df = utils.read_table_with_storage_path(
+    df = utils.read_table_with_storage_path(spark, 
         path=nycitytaxi_path, frmt=source_table_format, opt=read_options
     )
 
@@ -34,13 +34,13 @@ class Utils:
     """Simple Utils Class with helper function"""
 
     @staticmethod
-    def read_table_with_storage_path(path: str, frmt: str, opt: dict = {}):
+    def read_table_with_storage_path(spark: SparkSession, path: str, frmt: str, opt: dict = {}):
         """Read any kind of table"""
         df = spark.read.load(format=frmt, path=path, **opt)
         return df
 
     @staticmethod
-    def write_managed_table(df, table_name, mode="OVERWRITE"):
+    def write_managed_table(df: DataFrame, table_name, mode="OVERWRITE"):
         df.write.mode(mode).saveAsTable(table_name)
 
     @staticmethod
@@ -50,10 +50,11 @@ class Utils:
         )
 
     @staticmethod
-    def filter_zipcode(df, zipcode):
+    def filter_zipcode(df: DataFrame, zipcode):
         df_filter_zip = df.filter(df.pickup_zip == zipcode)
         return df_filter_zip
+    
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": #Only works with remote databricks cluster
+    main(spark=SparkSession.builder.getOrCreate())
